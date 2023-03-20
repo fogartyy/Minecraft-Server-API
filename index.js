@@ -19,6 +19,9 @@ function getData() {
     //convert to json
     var json = JSON.parse(content);
     //add to array
+    //apend file name to json
+    json.UUID = file;
+
     data.push(json);
   }
   //return array
