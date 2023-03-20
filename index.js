@@ -7,7 +7,7 @@ function getData() {
   //require fs
   const fs = require('fs');
   //get files from dirrectory sucking.world/playerdata
-  const files = fs.readdirSync('./sucking/world/playerdata/');
+  const files = fs.readdirSync('../sucking/world/playerdata/');
   //create array
   var data = [];
   //loop through files
@@ -15,7 +15,7 @@ function getData() {
     //get file
     var file = files[i];
     //read file
-    var content = fs.readFileSync('./sucking/world/playerdata/' + file);
+    var content = fs.readFileSync('../sucking/world/playerdata/' + file);
     //convert to json
     var json = JSON.parse(content);
     //add to array
