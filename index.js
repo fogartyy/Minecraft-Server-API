@@ -10,22 +10,24 @@ function getData() {
   const files = fs.readdirSync('../Sucking/world/stats/');
   //create array
   var data = [];
-  //loop through files
-  for (var i = 0; i < files.length; i++) {
-    //get file
-    var file = files[i];
-    //read file
-    var content = fs.readFileSync('../Sucking/world/stats/' + file);
-    //convert to json
-    var json = JSON.parse(content);
-    //add to array
-    //apend file name to json
-    json.UUID = file;
-
-    data.push(json);
-  }
-  //return array
+  //loop through files save data to array with each entry being labeled with the file name as UUID
+  files.forEach(file => {
+    //get data from file
+    var filedata = fs.readFileSync('../Sucking/world/stats/' + file, 'utf8');
+    //parse data from file
+    var parsed = JSON.parse(filedata);
+    //get uuid from file name
+    var uuid = file.replace('.json', '');
+    //add data to array
+    data.push({
+      uuid: uuid,
+      data: parsed
+    });
+  });
+  //return data
   return data;
+
+  
 }
 
 //get data
