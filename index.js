@@ -19,10 +19,14 @@ function getData() {
     //get uuid from file name
     var uuid = file.replace('.json', '');
     //add data to array
-    data.push({
+    var array =[];
+    array.push({
       uuid: uuid,
       data: parsed
     });
+
+    data.push(array);
+    
   });
   //return data
   return data;
@@ -42,7 +46,7 @@ app.get('/data', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     //send data
     res.send(JSON.stringify(data));
-    
+
 
 })
 
