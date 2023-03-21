@@ -18,38 +18,33 @@ var httpsServer = https.createServer(credentials, app);
 const cors = require('cors');
 app.use(cors());
 //function that gets data from dirrectory sucking.world/playerdata
-function getData() {
+async function getData() {
   //require fs
   const fs = require('fs');
-  //get files from dirrectory sucking.world/playerdata
+  //get files from directory ../Sucking/world/stats/
   const files = fs.readdirSync('../Sucking/world/stats/');
   //create array
   var data = [];
-  //loop through files save data to array with each entry being labeled with the file name as UUID
-  files.forEach(file => async function(){
+
+  //loop through files and read data from each file
+  for (const file of files) {
     //get data from file
-    var filedata = fs.readFileSync('../Sucking/world/stats/' + file, 'utf8');
+    var filedata = fs.readFileSync(`../Sucking/world/stats/${file}`, 'utf8');
     //parse data from file
     var parsed = JSON.parse(filedata);
-    //get uuid from file name
+    //get UUID from file name
     var uuid = file.replace('.json', '');
-    //add data to array
-    //name 
+    //get player name from UUID
     var name = await getMinecraftName(uuid);
-    var array =[];
-    array.push({
+    //add data to array
+    data.push({
       uuid: uuid,
       data: parsed,
       name: name
     });
-
-    data.push(array);
-    
-  });
+  }
   //return data
   return data;
-
-  
 }
 
 //function get minecraft name from uui using mojang api async 
