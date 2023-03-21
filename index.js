@@ -26,7 +26,7 @@ function getData() {
   //create array
   var data = [];
   //loop through files save data to array with each entry being labeled with the file name as UUID
-  files.forEach(file => {
+  files.forEach(file => async function(){
     //get data from file
     var filedata = fs.readFileSync('../Sucking/world/stats/' + file, 'utf8');
     //parse data from file
@@ -34,10 +34,13 @@ function getData() {
     //get uuid from file name
     var uuid = file.replace('.json', '');
     //add data to array
+    //name 
+    var name = await getMinecraftName(uuid);
     var array =[];
     array.push({
       uuid: uuid,
-      data: parsed
+      data: parsed,
+      name: name
     });
 
     data.push(array);
@@ -48,6 +51,24 @@ function getData() {
 
   
 }
+
+//function get minecraft name from uui using mojang api async 
+async function getMinecraftName(uuid) {
+  //require request
+  const request = require('request');
+  //get data from mojang api
+  var data = await request('https://api.mojang.com/user/profile/' + uuid, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    //return data
+    return body;
+  });
+  //return data
+  return data;
+}
+
+
+
+
 
 //get data
 var data = getData();
