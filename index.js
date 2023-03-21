@@ -10,7 +10,7 @@ var privateKey  = fs.readFileSync('../sslcert/selfsigned.key', 'utf8');
 var certificate = fs.readFileSync('../sslcert/selfsigned.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
-
+const axios = require('axios');
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
@@ -47,18 +47,15 @@ async function getData() {
   return data;
 }
 
-//function get minecraft name from uui using mojang api async 
 async function getMinecraftName(uuid) {
-  //require request
-  const request = require('request');
-  //get data from mojang api
-  var data = await request('https://api.mojang.com/user/profile/' + uuid, { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    //return data
-    return body;
-  });
-  //return data
-  return data;
+  try {
+    const response = await axios.get(`https://api.mojang.com/user/profile/${uuid}`);
+    const body = response.data;
+    return body.name;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 
