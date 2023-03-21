@@ -3,6 +3,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+
+//cors
+const cors = require('cors');
+app.use(cors());
 //function that gets data from dirrectory sucking.world/playerdata
 function getData() {
   //require fs
