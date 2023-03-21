@@ -24,9 +24,15 @@ function getData() {
     var uuid = file.replace('.json', '');
     //add data to array
     var array =[];
+    getApiData(uuid);
+
+    getMinecraftImage(uuid);
+
     array.push({
       uuid: uuid,
-      data: parsed
+      data: parsed,
+      name: getApiData(uuid),
+        image: getMinecraftImage(uuid)
     });
 
     data.push(array);
@@ -37,6 +43,31 @@ function getData() {
 
   
 }
+
+//function that gets data from api based on uuid fetch from internbet
+function getApiData(uuid) {
+    //require fetch
+    const fetch = require('node-fetch');
+    //get data from api
+    fetch('https://api.mojang.com/user/profiles/' + uuid)
+    .then(res => res.json())
+    .then(json => console.log(json));
+}
+
+//get mincraft image from api
+function getMinecraftImage(uuid) {
+    //require fetch
+    const fetch = require('node-fetch');
+    //get data from api
+    fetch('https://crafatar.com/avatars/' + uuid)
+    .then(res => res.json())
+    .then(json => console.log(json));
+}
+
+
+
+
+
 
 //get data
 var data = getData();
