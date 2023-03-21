@@ -2,7 +2,8 @@ const express = require('express')
 //set
 const app = express()
 const port = 3000
-
+//reqire fs
+const fs = require('fs');
 var http = require('http');
 var https = require('https');
 var privateKey  = fs.readFileSync('../sslcert/server.key', 'utf8');
