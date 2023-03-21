@@ -71,12 +71,11 @@ var data = getData();
 //get data
 app.get('/data', (req, res) => {
   //get data
-    var data = getData();
-    //send data
-    //format text as json
-    res.setHeader('Content-Type', 'application/json');
-    //send data
-    res.send(JSON.stringify(data));
+    getData().then((data) => {
+      //send data
+      res.send(data);
+    });
+   
 
 
 })
