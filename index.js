@@ -1,4 +1,8 @@
 const express = require('express')
+//set Access-Control-Allow-Origin
+const cors = require('cors');
+
+
 const app = express()
 const port = 3000
 
@@ -36,6 +40,10 @@ function getData() {
 
 //get data
 var data = getData();
+
+//set Access-Control-Allow-Origin
+app.use(cors());
+
 
 //get data
 app.get('/data', (req, res) => {
