@@ -77,6 +77,17 @@ app.get('/data', (req, res) => {
 
 })
 
+//get image
+app.get('/image', (req, res) => {
+  //get image
+  var image = fs.readFileSync('../output/output.png');
+  //send image
+  res.writeHead(200, {'Content-Type': 'image/png' });
+  res.end(image, 'binary');
+})
+
+
+
 //get data
 app.get('/', (req, res) => {
   res.send('Hello World!')
