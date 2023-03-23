@@ -7,7 +7,7 @@ var https = require('https');
 const axios = require('axios');
 const cors = require('cors');
 
-require('dotenv').config(__dirname+'/.env')
+require('dotenv').config({path: `${__dirname}/.env`});
 
 //log
 console.log('Starting server...');
