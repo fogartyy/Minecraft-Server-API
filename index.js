@@ -7,12 +7,14 @@ var https = require('https');
 const axios = require('axios');
 const cors = require('cors');
 
-const privateKeyLocation = '';
-const certificateLocation = '';
+require('dotenv').config();
 
-const serverWorldFileLocation = '';
+const privateKeyLocation = `${process.env.PRIVATE_KEY_LOCATION}}`;
+const certificateLocation = `${process.env.CERTIFICATE_LOCATION}}`;
 
-const serverImageLocation = '';
+const serverWorldFileLocation = `${process.env.SERVER_WORLD_FILE_LOCATION}}`;
+
+const serverImageLocation = `${process.env.SERVER_IMAGE_LOCATION}}`;
 
 var privateKey  = fs.readFileSync(privateKeyLocation, 'utf8');
 var certificate = fs.readFileSync(certificateLocation, 'utf8');
@@ -27,14 +29,14 @@ async function getData() {
   //require fs
   const fs = require('fs');
   //get files from directory ../Sucking/world/stats/
-  const files = fs.readdirSync(serverWorldFileLocation + '/stats');
+  const files = fs.readdirSync(serverWorldFileLocation + '/stats/');
   //create array
   var data = [];
 
   //loop through files and read data from each file
   for (const file of files) {
     //get data from file
-    var filedata = fs.readFileSync(serverWorldFileLocation+ `/stats/${uuid}`, 'utf8');
+    var filedata = fs.readFileSync(serverWorldFileLocation+ `/stats/${file}`, 'utf8');
     //parse data from file
     var parsed = JSON.parse(filedata);
     //get UUID from file name
