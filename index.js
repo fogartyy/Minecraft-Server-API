@@ -1,35 +1,40 @@
 const express = require('express')
-//set
 const app = express()
 const port = 3000
-//reqire fs
 const fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('../sslcert/selfsigned.key', 'utf8');
-var certificate = fs.readFileSync('../sslcert/selfsigned.crt', 'utf8');
-
-var credentials = {key: privateKey, cert: certificate};
 const axios = require('axios');
+const cors = require('cors');
+
+const privateKeyLocation = '';
+const certificateLocation = '';
+
+const serverWorldFileLocation = '';
+
+const serverImageLocation = '';
+
+var privateKey  = fs.readFileSync(privateKeyLocation, 'utf8');
+var certificate = fs.readFileSync(certificateLocation, 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
-//cors
-const cors = require('cors');
 app.use(cors());
 //function that gets data from dirrectory sucking.world/playerdata
 async function getData() {
   //require fs
   const fs = require('fs');
   //get files from directory ../Sucking/world/stats/
-  const files = fs.readdirSync('../Sucking/world/stats/');
+  const files = fs.readdirSync(serverWorldFileLocation + '/stats');
   //create array
   var data = [];
 
   //loop through files and read data from each file
   for (const file of files) {
     //get data from file
-    var filedata = fs.readFileSync(`../Sucking/world/stats/${file}`, 'utf8');
+    var filedata = fs.readFileSync(serverWorldFileLocation+ `/stats/${uuid}`, 'utf8');
     //parse data from file
     var parsed = JSON.parse(filedata);
     //get UUID from file name
@@ -58,13 +63,6 @@ async function getMinecraftName(uuid) {
   }
 }
 
-
-
-
-
-//get data
-var data = getData();
-
 //get data
 app.get('/data', (req, res) => {
   //get data
@@ -72,25 +70,15 @@ app.get('/data', (req, res) => {
       //send data
       res.send(data);
     });
-   
-
-
 })
 
 //get image
 app.get('/image', (req, res) => {
   //get image
-  var image = fs.readFileSync('../output/output.png');
+  var image = fs.readFileSync(serverImageLocation);
   //send image
   res.writeHead(200, {'Content-Type': 'image/png' });
   res.end(image, 'binary');
-})
-
-
-
-//get data
-app.get('/', (req, res) => {
-  res.send('Hello World!')
 })
 
 httpServer.listen(8080);
