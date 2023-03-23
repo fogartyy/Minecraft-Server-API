@@ -10,11 +10,16 @@ const cors = require('cors');
 require('dotenv').config();
 
 const privateKeyLocation = `${process.env.PRIVATE_KEY_LOCATION}`;
+console.log(privateKeyLocation);
+
 const certificateLocation = `${process.env.CERTIFICATE_LOCATION}`;
+console.log(certificateLocation);
 
 const serverWorldFileLocation = `${process.env.SERVER_WORLD_FILE_LOCATION}`;
+console.log(serverWorldFileLocation);
 
 const serverImageLocation = `${process.env.SERVER_IMAGE_LOCATION}`;
+console.log(serverImageLocation);
 
 var privateKey  = fs.readFileSync(privateKeyLocation, 'utf8');
 var certificate = fs.readFileSync(certificateLocation, 'utf8');
