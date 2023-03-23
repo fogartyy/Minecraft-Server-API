@@ -7,7 +7,7 @@ var https = require('https');
 const axios = require('axios');
 const cors = require('cors');
 
-require('dotenv').config();
+require('dotenv').config(__dirname+'/.env')
 
 const privateKeyLocation = `${process.env.PRIVATE_KEY_LOCATION}`;
 console.log(privateKeyLocation);
