@@ -9,6 +9,14 @@ const cors = require('cors');
 
 require('dotenv').config(__dirname+'/.env')
 
+//log
+console.log('Starting server...');
+console.log('Loading environment variables...');
+//log dirname
+console.log(__dirname);
+
+
+
 const privateKeyLocation = `${process.env.PRIVATE_KEY_LOCATION}`;
 console.log(privateKeyLocation);
 
