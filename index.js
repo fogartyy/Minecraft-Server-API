@@ -96,5 +96,24 @@ app.get('/image', (req, res) => {
   res.end(image, 'binary');
 })
 
+//get data by uuid
+app.get('/data/:uuid', (req, res) => {
+  //get uuid
+  var uuid = req.params.uuid;
+  //get data
+  getData().then((data) => {
+    //loop through data
+    for (var i = 0; i < data.length; i++) {
+      //check if uuid is equal to uuid in data
+      if (data[i].uuid == uuid) {
+        //send data
+        res.send(data[i]);
+      }
+    }
+  });
+})
+
+
+
 httpServer.listen(8080);
 httpsServer.listen(8443);
