@@ -38,11 +38,11 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 app.use(cors());
-//function that gets data from dirrectory sucking.world/playerdata
+//function that gets data from dirrectory world/playerdata
 async function getData() {
   //require fs
   const fs = require('fs');
-  //get files from directory ../Sucking/world/stats/
+  
   const files = fs.readdirSync(serverWorldFileLocation + '/stats/');
   //create array
   var data = [];
@@ -114,14 +114,18 @@ app.get('/data/:uuid', (req, res) => {
   });
 })
 
-//get player data nbt function
 async function getPlayerData(uuid) {
-  //get data from file
-  var filedata = fs.readFileSync(serverWorldFileLocation+ `/playerdata/${uuid}.dat`, 'utf8');
-  //parse data from file
-  var parsed = nbt.simplify(nbt.parse(filedata));
-  //return data
-  return parsed;
+  try {
+    //get data from file
+    var filedata = fs.readFileSync(serverWorldFileLocation+ `/playerdata/${uuid}.dat`, 'utf8');
+    //parse data from file
+    var parsed = nbt.simplify(nbt.parse(filedata));
+    //return data
+    return parsed;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 //get player data by uuid
