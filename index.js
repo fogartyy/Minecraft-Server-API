@@ -115,17 +115,19 @@ app.get('/data/:uuid', (req, res) => {
 })
 
 async function getPlayerData(uuid) {
+  //error handling
   try {
-    //get data from file
-    var filedata = fs.readFileSync(serverWorldFileLocation+ `/playerdata/${uuid}.dat`, 'utf8');
-    //parse data from file
-    var parsed = nbt.simplify(nbt.parse(filedata));
+    //nbt get data
+    var data = await nbt.parse(fs.readFileSync(serverWorldFileLocation + `/playerdata/${uuid}.dat`));
     //return data
-    return parsed;
+    return data;
   } catch (error) {
-    console.error(error);
-    return null;
+    //log error
+    console.log(error);
+    //return error
+    return error;
   }
+
 }
 
 //get player data by uuid
