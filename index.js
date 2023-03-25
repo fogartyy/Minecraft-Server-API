@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const fs = require('fs');
+
 var http = require('http');
 var https = require('https');
 const axios = require('axios');
@@ -129,6 +129,12 @@ app.get('/data/:uuid/player', (req, res) => {
   //get uuid
   var uuid = req.params.uuid;
   //get data
+  getPlayerData(uuid).then((data) => {
+    //send data 
+    res.send(data);
+  });
+})
+
 
 
 
