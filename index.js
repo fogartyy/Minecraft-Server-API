@@ -6,7 +6,8 @@ var http = require('http');
 var https = require('https');
 const axios = require('axios');
 const cors = require('cors');
-
+var fs = require('fs'),
+    nbt = require('prismarine-nbt');
 require('dotenv').config({path: `${__dirname}/.env`});
 
 //log
@@ -112,6 +113,22 @@ app.get('/data/:uuid', (req, res) => {
     }
   });
 })
+
+//get player data nbt function
+async function getPlayerData(uuid) {
+  //get data from file
+  var filedata = fs.readFileSync(serverWorldFileLocation+ `/playerdata/${uuid}.dat`, 'utf8');
+  //parse data from file
+  var parsed = nbt.simplify(nbt.parse(filedata));
+  //return data
+  return parsed;
+}
+
+//get player data by uuid
+app.get('/data/:uuid/player', (req, res) => {
+  //get uuid
+  var uuid = req.params.uuid;
+  //get data
 
 
 
